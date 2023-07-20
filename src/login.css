@@ -1,0 +1,21 @@
+/* Styles for login form */
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+  }
+  
+  input {
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 12px;
+    border: none; 
+    background: #007bff;
+    color: #fff;
+  }
