@@ -37,6 +37,7 @@
     display: flex;
     align-items: center;
     margin-right: 20px;
+    color: #0f0;
     transition: transform 0.3s ease-in-out;
   }
   
@@ -88,6 +89,7 @@
     background: #000;
     margin: 0;
     padding: 0;
+    cursor: block;
   }
   
   .home {
@@ -171,3 +173,10 @@
   @keyframes blink {
     50% { opacity: 0; }
   }
+  #canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  

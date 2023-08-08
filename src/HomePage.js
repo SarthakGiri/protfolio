@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './HomePage.css';
 import { Link } from 'react-router-dom';
-
-
+import MatrixRain from './MatrixRain';
+import useScramble from './useScramble';
 
 const SocialMediaIcons = () => (
   <div className="home-sci">
@@ -21,22 +21,43 @@ const SocialMediaIcons = () => (
   </div>
 );
 
-const HomePage = () => (
-  <div>
-    
-    <section className="home">
-      <div className="home-content">
-        <h1>This is Sarthak Giri</h1>
-        <h3>CyberSecurity Engineer</h3>
-        <p>Bachelors Of Network And CyberSecurity</p>
-        <div className="btn-box">
-          <button>Hire me</button>
-          <button>Lets Talk</button>
+const HomePage = () => {
+  useEffect(() => {
+    MatrixRain();
+  }, []);
+
+  const [hoverHireMe, setHoverHireMe] = useState(false);
+  const [hoverLetsTalk, setHoverLetsTalk] = useState(false);
+  const hireMeText = useScramble('Hire me', hoverHireMe);
+  const letsTalkText = useScramble('Lets Talk', hoverLetsTalk);
+
+  return (
+    <div>
+      <canvas id="canvas"></canvas>
+      <section className="home">
+        <div className="home-content">
+          <h1>This is Sarthak Giri</h1>
+          <h3>CyberSecurity Engineer</h3>
+          <p>Bachelors Of Network And CyberSecurity</p>
+          <div className="btn-box">
+            <button
+              onMouseEnter={() => setHoverHireMe(hover => !hover)}
+              onMouseLeave={() => setHoverHireMe(hover => !hover)}
+            >
+              {hireMeText}
+            </button>
+            <button
+              onMouseEnter={() => setHoverLetsTalk(hover => !hover)}
+              onMouseLeave={() => setHoverLetsTalk(hover => !hover)}
+            >
+              {letsTalkText}
+            </button>
+          </div>
+          <SocialMediaIcons />
         </div>
-        <SocialMediaIcons />
-      </div>
-    </section>
-  </div>
-);
+      </section>
+    </div>
+  );
+};
 
 export default HomePage;
