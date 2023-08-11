@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect , useState} from 'react';
 import './HomePage.css';
-import { Link } from 'react-router-dom';
 import MatrixRain from './MatrixRain';
+import Typewriter from 'typewriter-effect';
+import { Link } from 'react-router-dom';
 import useScramble from './useScramble';
 
 const SocialMediaIcons = () => (
@@ -20,38 +21,43 @@ const SocialMediaIcons = () => (
     </a>
   </div>
 );
-
 const HomePage = () => {
   useEffect(() => {
     MatrixRain();
   }, []);
 
-  const [hoverHireMe, setHoverHireMe] = useState(false);
-  const [hoverLetsTalk, setHoverLetsTalk] = useState(false);
-  const hireMeText = useScramble('Hire me', hoverHireMe);
-  const letsTalkText = useScramble('Lets Talk', hoverLetsTalk);
+  const [hireMeTrigger, setHireMeTrigger] = useState(false);
+  const [letsTalkTrigger, setLetsTalkTrigger] = useState(false);
+
+  const hireMeText = useScramble("Hire me", hireMeTrigger);
+  const letsTalkText = useScramble("Let's Talk", letsTalkTrigger);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHireMeTrigger(!hireMeTrigger);
+      setLetsTalkTrigger(!letsTalkTrigger);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [hireMeTrigger, letsTalkTrigger]);
 
   return (
     <div>
       <canvas id="canvas"></canvas>
       <section className="home">
         <div className="home-content">
-          <h1>This is Sarthak Giri</h1>
-          <h3>CyberSecurity Engineer</h3>
-          <p>Bachelors Of Network And CyberSecurity</p>
+          <div className="typewriter-container">
+            <Typewriter
+              options={{
+                strings: ['This is Sarthak Giri', 'CyberSecurity Engineer', 'Bachelors Of Network And CyberSecurity'],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </div>
           <div className="btn-box">
-            <button
-              onMouseEnter={() => setHoverHireMe(hover => !hover)}
-              onMouseLeave={() => setHoverHireMe(hover => !hover)}
-            >
-              {hireMeText}
-            </button>
-            <button
-              onMouseEnter={() => setHoverLetsTalk(hover => !hover)}
-              onMouseLeave={() => setHoverLetsTalk(hover => !hover)}
-            >
-              {letsTalkText}
-            </button>
+            <Link to="/hire-me" className="glitch-btn" data-text={hireMeText}>{hireMeText}</Link>
+            <Link to="/lets-talk" className="glitch-btn" data-text={letsTalkText}>{letsTalkText}</Link>
           </div>
           <SocialMediaIcons />
         </div>

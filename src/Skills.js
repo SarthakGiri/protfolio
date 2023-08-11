@@ -1,33 +1,31 @@
 import React from 'react';
+import Console from 'react-console-emulator';
 
-function Terminal() {
+const commands = {
+  frontend: {
+    fn: () => 'HTML, CSS, JavaScript, React, Redux'
+  },
+  backend: {
+    fn: () => 'Node.js, Express, MongoDB , Azure'
+  },
+  cybersecurity: {
+    fn: () => 'Network Security, Ethical Hacking, Cryptography'
+  },
+  other: {
+    fn: () => 'Git, Linux, Bash'
+  }
+};
 
-  const skills = [
-    'Learn basics of Linux commands',
-    'Understand networking fundamentals',
-    'Set up a virtual lab environment',
-    'Use Kali Linux for penetration testing',
-    'Learn Python for security automation',
-    'Study cryptography concepts',
-    'Practice ethical hacking techniques',
-    'Learn about common cyber attacks',
-    'Monitor systems with ELK stack',
-    'Secure code review and QA testing',
-  ];
+const Skills = () => (
+  <section className="skills">
+    <h2>Skills</h2>
+    <Console
+      commands={commands}
+      welcomeMessage={'Enter "frontend", "backend", "cybersecurity", or "other" to see my skills in each category.'}
+      promptLabel={'$'}
+      autoFocus={true}
+    />
+  </section>
+);
 
-  return (
-    <div className="terminal">
-      <p className="prompt">user@computer:~$ skills</p>
-      
-      {skills.map(skill => (
-        <p key={skill}>{skill}</p>
-      ))}
-
-    </div>
-  );
-}
-
-// Styles
-
-
-export default Terminal;
+export default Skills;

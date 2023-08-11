@@ -1,10 +1,11 @@
 import React from "react";
 import Slider from "react-slick";
+import './Projects.css';
 
 const projects = [
   {
     title: "Project 1",
-    imageUrl: "http://example.com/project1.jpg",
+    imageUrl: "/project1.png",
     description: "This is project 1",
   },
   {
@@ -27,15 +28,20 @@ const Projects = () => {
   };
 
   return (
-    <Slider {...settings}>
-      {projects.map((project, index) => (
-        <div key={index}>
-          <h3>{project.title}</h3>
-          <img src={project.imageUrl} alt={project.title} />
-          <p>{project.description}</p>
-        </div>
-      ))}
-    </Slider>
+    <div className="projects-container">
+      <h2>My Projects</h2>
+      <Slider {...settings}>
+        {projects.map((project, index) => (
+          <div key={index} className="project-slide">
+            <div className="project-image-container">
+              <img src={project.imageUrl} alt={project.title} className="project-image" />
+            </div>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 
