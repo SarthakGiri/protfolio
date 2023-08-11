@@ -24,15 +24,8 @@ const contactSchema = new mongoose.Schema({
   message: String
 });
 const ContactMessage = mongoose.model('ContactMessage', contactSchema);
-
-// Schema for hiring inquiries
-const hireMeSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  message: String
-});
-const HireMeInquiry = mongoose.model('HireMeInquiry', hireMeSchema);
-
+const HireMeInquiry = mongoose.model('HireMeInquiry', contactSchema); // Assuming the same structure for hiring inquiries
+const LetsTalkMessage = mongoose.model('LetsTalkMessage', contactSchema); // Assuming the same structure for Let's Talk messages
 
 // Middleware to verify token
 const verifyToken = (req, res, next) => {
@@ -48,8 +41,8 @@ const verifyToken = (req, res, next) => {
 // Admin login route
 app.post('/api/admin/login', (req, res) => {
   const { username, password } = req.body;
-  const adminUsername = "admin";
-  const adminPassword = "password";
+  const adminUsername = "girisarthak";
+  const adminPassword = "dipen123";
   if (username === adminUsername && password === adminPassword) {
     const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
@@ -60,8 +53,7 @@ app.post('/api/admin/login', (req, res) => {
 
 // Route to handle contact form submission
 app.post('/api/contact', (req, res) => {
-  const { name, email, message } = req.body;
-  const contactMessage = new ContactMessage({ name, email, message });
+  const contactMessage = new ContactMessage(req.body);
   contactMessage.save()
     .then(() => res.json({ message: 'Form submitted successfully' }))
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
@@ -69,10 +61,17 @@ app.post('/api/contact', (req, res) => {
 
 // Route to handle "Hire Me" form submission
 app.post('/api/hire-me', (req, res) => {
-  const { name, email, message } = req.body;
-  const hireMeInquiry = new HireMeInquiry({ name, email, message });
+  const hireMeInquiry = new HireMeInquiry(req.body);
   hireMeInquiry.save()
     .then(() => res.json({ message: 'Inquiry submitted successfully' }))
+    .catch(err => res.status(500).json({ message: 'An error occurred' }));
+});
+
+// Route to handle "Let's Talk" form submission
+app.post('/api/lets-talk', (req, res) => { // New endpoint for Let's Talk messages
+  const letsTalkMessage = new LetsTalkMessage(req.body);
+  letsTalkMessage.save()
+    .then(() => res.json({ message: 'Message submitted successfully' }))
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
 });
 
@@ -90,37 +89,58 @@ app.get('/api/hire-me-inquiries', (req, res) => {
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
 });
 
+// Route to get all "Let's Talk" messages
+app.get('/api/lets-talk-messages', (req, res) => { // New endpoint for Let's Talk messages
+  LetsTalkMessage.find({})
+    .then(messages => res.json(messages))
+    .catch(err => res.status(500).json({ message: 'An error occurred' }));
+});
+
 app.get('/', (req, res) => {
   res.send('Welcome to the backend server!');
 });
-// Route to fetch all contact messages
+
+// Route to fetch all contact messages for admin
 app.get('/api/admin/contact-messages', (req, res) => {
   ContactMessage.find()
     .then(messages => res.json(messages))
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
 });
 
-// Route to fetch all hiring inquiries
+// Route to fetch all hiring inquiries for admin
 app.get('/api/admin/hire-me-inquiries', (req, res) => {
   HireMeInquiry.find()
     .then(inquiries => res.json(inquiries))
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
 });
 
-// Route to delete a contact message by ID
+// Route to fetch all "Let's Talk" messages for admin
+app.get('/api/admin/lets-talk-messages', (req, res) => { // New endpoint for Let's Talk messages
+  LetsTalkMessage.find()
+    .then(messages => res.json(messages))
+    .catch(err => res.status(500).json({ message: 'An error occurred' }));
+});
+
+// Route to delete a contact message by ID for admin
 app.delete('/api/admin/contact-messages/:id', (req, res) => {
   ContactMessage.findByIdAndDelete(req.params.id)
     .then(() => res.json({ message: 'Message deleted successfully' }))
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
 });
 
-// Route to delete a hiring inquiry by ID
+// Route to delete a hiring inquiry by ID for admin
 app.delete('/api/admin/hire-me-inquiries/:id', (req, res) => {
   HireMeInquiry.findByIdAndDelete(req.params.id)
     .then(() => res.json({ message: 'Inquiry deleted successfully' }))
     .catch(err => res.status(500).json({ message: 'An error occurred' }));
 });
 
+// Route to delete a "Let's Talk" message by ID for admin
+app.delete('/api/admin/lets-talk-messages/:id', (req, res) => { // New endpoint for Let's Talk messages
+  LetsTalkMessage.findByIdAndDelete(req.params.id)
+    .then(() => res.json({ message: 'Message deleted successfully' }))
+    .catch(err => res.status(500).json({ message: 'An error occurred' }));
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
