@@ -28,7 +28,8 @@ const Projects = () => {
   };
 
   return (
-    <div className="projects-container">
+    <div className="page-container">
+      <div className="projects-container">
       <h2>My Projects</h2>
       <Slider {...settings}>
         {projects.map((project, index) => (
@@ -41,6 +42,7 @@ const Projects = () => {
           </div>
         ))}
       </Slider>
+      </div>
     </div>
   );
 };

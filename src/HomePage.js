@@ -3,7 +3,7 @@ import './HomePage.css';
 import MatrixRain from './MatrixRain';
 import Typewriter from 'typewriter-effect';
 import { Link } from 'react-router-dom';
-import useScramble from './useScramble';
+// import useScramble from './useScramble';
 
 const SocialMediaIcons = () => (
   <div className="home-sci">
@@ -22,44 +22,69 @@ const SocialMediaIcons = () => (
   </div>
 );
 const HomePage = () => {
-  useEffect(() => {
-    MatrixRain();
-  }, []);
+  // Subtle matrix rain background with cleanup
+  useEffect(() => { const cleanup = MatrixRain(); return cleanup; }, []);
 
-  const [hireMeTrigger, setHireMeTrigger] = useState(false);
-  const [letsTalkTrigger, setLetsTalkTrigger] = useState(false);
-
-  const hireMeText = useScramble("Hire me", hireMeTrigger);
-  const letsTalkText = useScramble("Let's Talk", letsTalkTrigger);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHireMeTrigger(!hireMeTrigger);
-      setLetsTalkTrigger(!letsTalkTrigger);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [hireMeTrigger, letsTalkTrigger]);
+  const hireMeText = "Hire me";
+  const letsTalkText = "Let's Talk";
 
   return (
     <div>
-      <canvas id="canvas"></canvas>
+      {/* removed matrix canvas for minimal theme */}
       <section className="home">
         <div className="home-content">
-          <div className="typewriter-container">
-            <Typewriter
-              options={{
-                strings: ['This is Sarthak Giri', 'CyberSecurity Engineer', 'Bachelors Of Network And CyberSecurity'],
-                autoStart: true,
-                loop: true,
-              }}
-            />
+          <div className="hero">
+            <div className="hero__left">
+              <div className="pretitle">$ whoami</div>
+              <h1 className="title">Sarthak Giri</h1>
+              <div className="headline typewriter-container">
+                <Typewriter
+                  options={{
+                    strings: ['Cybersecurity Engineer', 'Offensive Security | Blue Team', 'React • Node.js • Azure'],
+                    autoStart: true,
+                    loop: true,
+                  }}
+                />
+              </div>
+              <p className="subtitle">I secure systems, break barriers, and build resilient products.</p>
+              <div className="btn-box">
+                <Link to="/hire-me" className="btn btn--primary">{hireMeText}</Link>
+                <Link to="/lets-talk" className="btn link-underline">{letsTalkText}</Link>
+              </div>
+              <div className="badges">
+                <span className="badge">Security+</span>
+                <span className="badge">OWASP</span>
+                <span className="badge">Azure</span>
+              </div>
+              <SocialMediaIcons />
+            </div>
+            <div className="hero__right">
+              <div className="terminal-card">
+                <div className="terminal-card__header">
+                  <span className="dot dot--red"></span>
+                  <span className="dot dot--yellow"></span>
+                  <span className="dot dot--green"></span>
+                  <span className="terminal-title">/home/sarthak ~</span>
+                </div>
+                <div className="terminal-card__body">
+                  <pre>
+                    <code>{`$ whoami _
+> Cybersecurity Engineer | React/Node Developer
+
+$ skills --top
+> Network Security, Ethical Hacking, Cryptography, Azure
+
+$ projects --recent
+> Slider-based portfolio, Secure contact API, Chatbot
+
+$ contact --open
+> email: you@example.com | LinkedIn: /in/sarthak-giri`}
+                    </code>
+                  </pre>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="btn-box">
-            <Link to="/hire-me" className="glitch-btn" data-text={hireMeText}>{hireMeText}</Link>
-            <Link to="/lets-talk" className="glitch-btn" data-text={letsTalkText}>{letsTalkText}</Link>
-          </div>
-          <SocialMediaIcons />
         </div>
       </section>
     </div>

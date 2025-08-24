@@ -1,0 +1,80 @@
+.skills {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  color: var(--text);
+  background: var(--bg);
+  padding: 60px 20px 40px;
+  max-width: 1000px;
+  margin: auto;
+  min-height: 100vh;
+  position: relative;
+  border-radius: 12px;
+}
+
+.skills::before { content: none; }
+
+.skills > * {
+  position: relative;
+  z-index: 2;
+}
+
+.skills-header { text-align: center; margin-bottom: 20px; }
+.skills h2 { font-size: clamp(26px, 4.5vw, 40px); margin: 4px 0 6px; text-align: center; }
+.skills .subtitle { color: var(--muted); margin: 0 auto; max-width: 62ch; text-align: center; }
+
+/* Filters */
+.skills-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 12px 0 4px; }
+.chip { border: 1px solid var(--border); background: var(--panel); color: var(--text); padding: 6px 12px; border-radius: 999px; font-size: 13px; cursor: pointer; transition: border-color .2s ease, background-color .2s ease; }
+.chip:hover { background: #0f131a; border-color: var(--border-strong); }
+.chip--active { border-color: rgba(53,255,155,0.45); box-shadow: inset 0 0 0 1px rgba(53,255,155,0.25); }
+
+/* Console styling improvements */
+.react-console-emulator { background: #0f131a !important; border: 1px solid var(--border) !important; border-radius: 10px !important; padding: 16px !important; backdrop-filter: none !important; box-shadow: none !important; font-family: inherit !important; font-size: 14px !important; line-height: 1.7 !important; color: var(--text) !important; }
+
+.react-console-emulator .react-console-emulator-content { color: var(--text) !important; background: transparent !important; }
+
+.react-console-emulator .react-console-emulator-inputArea { background: #0b0f14 !important; border: 1px solid var(--border) !important; border-radius: 8px !important; padding: 10px !important; margin-top: 14px !important; }
+
+.react-console-emulator .react-console-emulator-prompt { color: var(--muted) !important; font-weight: 600 !important; text-shadow: none !important; }
+
+.react-console-emulator .react-console-emulator-input { color: var(--text) !important; background: transparent !important; border: none !important; outline: none !important; font-family: inherit !important; font-size: inherit !important; text-shadow: none !important; }
+
+.react-console-emulator .react-console-emulator-message { margin: 10px 0 !important; padding: 5px 0 !important; border-left: 3px solid var(--border) !important; padding-left: 12px !important; }
+
+.react-console-emulator .react-console-emulator-welcomeMessage { color: var(--muted) !important; background: transparent !important; padding: 10px !important; border-radius: 8px !important; border: 1px solid var(--border) !important; margin-bottom: 16px !important; text-align: center !important; }
+
+@keyframes pulse { from { opacity: 1; } to { opacity: 1; } }
+
+@media (max-width: 768px) {
+  .skills { padding: 50px 16px 32px; margin: 10px; border-radius: 10px; }
+  .react-console-emulator { padding: 16px !important; font-size: 14px !important; }
+}
+
+/* Layout */
+.skills-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; margin-top: 12px; align-items: start; }
+.skills-left { position: sticky; top: 84px; }
+.skills-right { }
+
+.terminal-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+
+/* Cards */
+.skill-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.skill-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px; transition: transform .15s ease, border-color .2s ease; }
+.skill-card:hover { transform: translateY(-2px); border-color: var(--border-strong); }
+.skill-card__header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.skill-card__icon { font-size: 18px; }
+.skill-card__title { font-size: 16px; margin: 0; }
+
+/* Meter */
+.meter { position: relative; height: 9px; background: #0b0f14; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; margin: 8px 0 10px; }
+.meter__fill { height: 100%; background: linear-gradient(90deg, rgba(53,255,155,0.9), rgba(0,234,255,0.9)); box-shadow: 0 0 12px rgba(53,255,155,0.25); }
+.meter__value { position: absolute; right: 6px; top: -22px; font-size: 11px; color: var(--muted); }
+
+/* Tags */
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; padding: 4px 8px; background: #0f131a; border: 1px solid var(--border); border-radius: 999px; color: var(--text); }
+
+@media (max-width: 980px) {
+  .skills-layout { grid-template-columns: 1fr; }
+  .skills-left { position: static; }
+  .skill-grid { grid-template-columns: 1fr; }
+}
