@@ -1,0 +1,17 @@
+.lets-talk-container { padding: 16px; max-width: 900px; width: 100%; }
+.lt-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
+.lt-header .title { font-weight: 800; }
+.status { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+.status .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.status .dot.online { background: var(--accent); box-shadow: 0 0 12px rgba(53,255,155,0.4); }
+.status .dot.offline { background: #5a5a5a; }
+
+.chat-window { height: 360px; overflow: auto; padding: 10px; background: #0b0f14; border: 1px solid var(--border); border-radius: 8px; }
+.message { margin: 8px 0; padding: 10px 12px; border-radius: 8px; max-width: 80%; }
+.message.user { background: #0e1813; border: 1px solid var(--border); margin-left: auto; }
+.message.bot { background: #0f131a; border: 1px solid var(--border); }
+
+.message-input { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px; }
+.message-input input { background: #0f131a; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; color: var(--text); }
+.message-input input:focus { outline: none; border-color: var(--border-strong); background: #0b0f14; }
+

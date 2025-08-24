@@ -1,18 +1,19 @@
 
-import './HomePage.css'
-import React, { useState, useEffect } from 'react';
+import './LetsTalk.css';
+import React, { useState, useEffect, useRef } from 'react';
 
 const LetsTalk = () => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isOnline, setIsOnline] = useState(false); // Set your online/offline status here
+  const bottomRef = useRef(null);
 
   const handleSendMessage = () => {
     if (inputMessage.trim() === '') return;
 
     // Add the user's message to the chat window
     const userMessage = { sender: 'user', text: inputMessage };
-    setMessages([...messages, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
 
     // Clear the input field
     setInputMessage('');
@@ -30,34 +31,43 @@ const LetsTalk = () => {
 
     // Add the bot's response to the chat window after a short delay
     setTimeout(() => {
-      setMessages([...messages, userMessage, { sender: 'bot', text: botResponse }]);
-    }, 1000);
+      setMessages((prev) => [...prev, { sender: 'bot', text: botResponse }]);
+    }, 600);
   };
 
   // Scroll to the bottom of the chat window whenever a new message is added
   useEffect(() => {
-    const chatWindow = document.querySelector('.chat-window');
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
-    <div className="lets-talk-container">
-      <div className="chat-window">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.sender}`}>
-            {message.text}
+    <div className="page-container">
+      <div className="lets-talk-container terminal-panel">
+        <header className="lt-header">
+          <div className="status">
+            <span className={`dot ${isOnline ? 'online' : 'offline'}`}></span>
+            {isOnline ? 'Online' : 'Offline'}
           </div>
-        ))}
-      </div>
-      <div className="message-input">
-        <input
-          type="text"
-          placeholder="Type a message..."
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-        />
-        <button onClick={handleSendMessage}>Send</button>
+          <div className="title">Let's Talk</div>
+        </header>
+        <div className="chat-window">
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message.sender}`}>
+              {message.text}
+            </div>
+          ))}
+          <div ref={bottomRef} />
+        </div>
+        <div className="message-input">
+          <input
+            type="text"
+            placeholder={isOnline ? 'Type a message...' : 'Leave a message…'}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+          />
+          <button className="btn btn--primary" onClick={handleSendMessage}>Send</button>
+        </div>
       </div>
     </div>
   );

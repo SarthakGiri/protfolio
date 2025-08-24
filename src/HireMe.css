@@ -1,0 +1,18 @@
+.hire-panel { padding: 24px; max-width: 900px; width: 100%; }
+.hire-header { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 18px; }
+.hire-header .prompt { color: var(--accent); font-weight: 900; }
+.hire-header .title { margin: 0; font-size: clamp(24px, 4.5vw, 36px); }
+.hire-header .subtitle { margin: 0; color: var(--muted); font-size: 14px; }
+
+.hire-form { display: flex; flex-direction: column; gap: 16px; }
+.hire-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.hire-form .field { display: flex; flex-direction: column; gap: 6px; }
+.hire-form label { color: var(--muted); font-weight: 600; font-size: 14px; }
+.hire-form input, .hire-form textarea { background: #0f131a; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; color: var(--text); }
+.hire-form input:focus, .hire-form textarea:focus { outline: none; border-color: var(--border-strong); background: #0b0f14; }
+.actions { display: flex; gap: 12px; margin-top: 8px; }
+
+@media (max-width: 768px) {
+  .hire-form .row { grid-template-columns: 1fr; }
+}
+
