@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Access Denied | Sarthak Giri</title>
+    <meta name="description" content="404 - Unauthorized access attempt detected. Return to secure portal.">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ff0055;
+            border-radius: 16px;
+            box-shadow: 
+                0 0 20px rgba(255, 0, 85, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 10;
+            animation: terminalFlicker 0.1s infinite;
+        }
+
+        @keyframes terminalFlicker {
+            0%, 98% { transform: translate(0); }
+            1% { transform: translate(-1px, 1px); }
+            2% { transform: translate(1px, -1px); }
+        }
+
+        .glitch-text {
+            font-size: 6rem;
+            font-weight: 700;
+            color: #ff0055;
+            text-shadow: 
+                0 0 10px #ff0055,
+                2px 2px 0 #00ff41,
+                -2px -2px 0 #0099ff;
+            animation: glitch 2s infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                text-shadow: 
+                    0 0 10px #ff0055,
+                    2px 2px 0 #00ff41,
+                    -2px -2px 0 #0099ff;
+            }
+            25% {
+                text-shadow: 
+                    0 0 15px #ff0055,
+                    -2px 2px 0 #00ff41,
+                    2px -2px 0 #0099ff;
+            }
+            50% {
+                text-shadow: 
+                    0 0 20px #ff0055,
+                    2px -2px 0 #00ff41,
+                    -2px 2px 0 #0099ff;
+            }
+            75% {
+                text-shadow: 
+                    0 0 25px #ff0055,
+                    -2px -2px 0 #00ff41,
+                    2px 2px 0 #0099ff;
+            }
+        }
+
+        .error-title {
+            font-size: 2rem;
+            color: #ff0055;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .error-subtitle {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .terminal-output {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .prompt {
+            color: #00ff41;
+            font-weight: 600;
+        }
+
+        .command {
+            color: #ffffff;
+        }
+
+        .output-line {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .error-line {
+            color: #ff4444;
+        }
+
+        .warning-line {
+            color: #ffaa00;
+        }
+
+        .success-line {
+            color: #00ff41;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: 2px solid;
+            border-radius: 8px;
+            background: transparent;
+            color: inherit;
+            text-decoration: none;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            border-color: #00ff41;
+            color: #00ff41;
+        }
+
+        .btn-primary:hover {
+            background: #00ff41;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            border-color: #0099ff;
+            color: #0099ff;
+        }
+
+        .btn-secondary:hover {
+            background: #0099ff;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(0, 153, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Matrix Rain Background */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            color: #00ff41;
+            animation: matrixFall linear infinite;
+            white-space: nowrap;
+            opacity: 0.3;
+        }
+
+        @keyframes matrixFall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .error-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            
+            .glitch-text {
+                font-size: 4rem;
+            }
+            
+            .error-title {
+                font-size: 1.5rem;
+            }
+            
+            .error-subtitle {
+                font-size: 1rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glitch-text {
+                font-size: 3rem;
+            }
+            
+            .terminal-output {
+                font-size: 0.8rem;
+                padding: 15px;
+            }
+        }
+
+        /* High Performance Mode */
+        @media (prefers-reduced-motion: reduce) {
+            .error-container,
+            .glitch-text,
+            .matrix-column {
+                animation: none !important;
+            }
+            
+            .glitch-text {
+                text-shadow: 0 0 10px #ff0055;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Rain Background -->
+    <div class="matrix-rain" id="matrixRain"></div>
+
+    <!-- Error Container -->
+    <div class="error-container">
+        <div class="glitch-text">404</div>
+        <h1 class="error-title">Access Denied</h1>
+        <p class="error-subtitle">Unauthorized intrusion detected</p>
+        
+        <div class="terminal-output">
+            <div><span class="prompt">root@security:~$</span> <span class="command">access_check --path=requested</span></div>
+            <div class="output-line error-line">ERROR: Resource not found in secure database</div>
+            <div class="output-line warning-line">WARNING: Unauthorized access attempt logged</div>
+            <div class="output-line">TIMESTAMP: <span id="timestamp"></span></div>
+            <div class="output-line">IP_ADDRESS: [REDACTED]</div>
+            <div class="output-line">USER_AGENT: [SANITIZED]</div>
+            <div class="output-line success-line">FIREWALL: Active - Intrusion contained</div>
+            <div class="output-line">STATUS: Redirecting to secure portal...</div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/" class="btn btn-primary">
+                <span>🏠</span>
+                Return to Base
+            </a>
+            <a href="/contact" class="btn btn-secondary">
+                <span>📞</span>
+                Report Issue
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Rain Effect
+        function createMatrixRain() {
+            const container = document.getElementById('matrixRain');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for (let i = 0; i < 30; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = Math.random() * 100 + '%';
+                column.style.animationDuration = (3 + Math.random() * 4) + 's';
+                column.style.animationDelay = Math.random() * 5 + 's';
+                
+                let columnText = '';
+                for (let j = 0; j < 20; j++) {
+                    columnText += chars[Math.floor(Math.random() * chars.length)] + '<br>';
+                }
+                column.innerHTML = columnText;
+                
+                container.appendChild(column);
+            }
+        }
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            const timestamp = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+            document.getElementById('timestamp').textContent = timestamp;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createMatrixRain();
+            updateTimestamp();
+            
+            // Auto-redirect after 10 seconds
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 10000);
+        });
+
+        // Konami Code Easter Egg
+        let konamiCode = [];
+        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up Up Down Down Left Right Left Right B A
+        
+        document.addEventListener('keydown', function(e) {
+            konamiCode.push(e.keyCode);
+            if (konamiCode.length > 10) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                alert('🎮 Konami Code Activated! You found the secret! 🎯');
+                document.querySelector('.glitch-text').style.animation = 'glitch 0.1s infinite';
+                konamiCode = [];
+            }
+        });
+    </script>
+</body>
+</html>

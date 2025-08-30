@@ -1,0 +1,357 @@
+/* Neural Network Visualization Styles */
+.neural-network-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: radial-gradient(ellipse at center, rgba(0, 15, 25, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--box-shadow-neon);
+}
+
+.neural-network-canvas {
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* Network Stats Overlay */
+.network-stats {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Active Node Tooltip */
+.node-tooltip {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 15px;
+  min-width: 180px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 8px rgba(0, 234, 255, 0.2);
+  animation: tooltipSlideIn 0.3s ease-out;
+}
+
+@keyframes tooltipSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.node-tooltip h4 {
+  margin: 0 0 10px 0;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.activation-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 234, 255, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.activation-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-3));
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  animation: activationPulse 2s ease-in-out infinite;
+}
+
+@keyframes activationPulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.node-tooltip p {
+  margin: 5px 0 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Neural Network Title */
+.network-title {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title-text {
+  color: var(--accent);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px var(--accent);
+}
+
+.title-subtitle {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  opacity: 0.8;
+}
+
+/* Loading Animation */
+.neural-network-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 234, 255, 0.1),
+    transparent
+  );
+  animation: neuralScan 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes neuralScan {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* Interactive States */
+.neural-network-container:hover .network-stats {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: var(--accent);
+  box-shadow: 0 0 6px rgba(0, 234, 255, 0.15);
+}
+
+.neural-network-container:hover .title-text {
+  animation: titleGlow 2s ease-in-out infinite;
+}
+
+@keyframes titleGlow {
+  0%, 100% {
+    text-shadow: 0 0 10px var(--accent);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--accent), 0 0 30px var(--accent-2);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .neural-network-container {
+    height: 300px;
+  }
+  
+  .network-stats {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  
+  .stat-item {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100px;
+  }
+  
+  .node-tooltip {
+    right: 10px;
+    min-width: 150px;
+    padding: 12px;
+  }
+  
+  .node-tooltip h4 {
+    font-size: 0.9rem;
+  }
+  
+  .title-text {
+    font-size: 1rem;
+  }
+  
+  .title-subtitle {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .neural-network-container {
+    height: 250px;
+  }
+  
+  .network-stats {
+    position: static;
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+  
+  .node-tooltip {
+    position: static;
+    margin: 10px;
+    transform: none;
+    width: calc(100% - 20px);
+  }
+  
+  .network-title {
+    position: static;
+    margin: 10px;
+    text-align: center;
+  }
+}
+
+/* High Performance Mode */
+@media (prefers-reduced-motion: reduce) {
+  .neural-network-container::before {
+    animation: none;
+  }
+  
+  .activation-fill {
+    animation: none;
+  }
+  
+  .title-text {
+    animation: none !important;
+    text-shadow: 0 0 10px var(--accent);
+  }
+  
+  .node-tooltip {
+    animation: none;
+    transform: translateY(-50%);
+  }
+  
+  @media (max-width: 480px) {
+    .node-tooltip {
+      transform: none;
+    }
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .neural-network-canvas {
+    cursor: pointer;
+  }
+  
+  .node-tooltip {
+    /* Always show some interaction hint on touch devices */
+    opacity: 0.9;
+  }
+  
+  .network-stats {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Accessibility Enhancements */
+.neural-network-container:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.neural-network-container[aria-label] {
+  /* For screen readers */
+  position: relative;
+}
+
+.neural-network-container::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Dark Theme Enhancements */
+@media (prefers-color-scheme: dark) {
+  .neural-network-container {
+    background: radial-gradient(ellipse at center, rgba(0, 10, 20, 0.9) 0%, rgba(0, 0, 0, 0.95) 100%);
+  }
+  
+  .network-stats {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .node-tooltip {
+    background: rgba(0, 0, 0, 0.95);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .neural-network-container {
+    background: white;
+    border: 2px solid #000;
+  }
+  
+  .network-stats,
+  .node-tooltip,
+  .network-title {
+    color: #000;
+    background: white;
+    border: 1px solid #000;
+  }
+  
+  .neural-network-container::before {
+    display: none;
+  }
+}

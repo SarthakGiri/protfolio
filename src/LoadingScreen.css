@@ -1,0 +1,418 @@
+/* Loading Screen Styles */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, #0a0a0f 0%, #000000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  overflow: hidden;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Quantum Loader */
+.quantum-loader {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 3rem;
+}
+
+.quantum-ring {
+  position: absolute;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  animation: quantumRotate 3s linear infinite;
+}
+
+.ring-1 {
+  width: 150px;
+  height: 150px;
+  border-top: 2px solid #00eaff;
+  border-right: 2px solid rgba(0, 234, 255, 0.3);
+  animation-duration: 2s;
+}
+
+.ring-2 {
+  width: 100px;
+  height: 100px;
+  top: 25px;
+  left: 25px;
+  border-top: 2px solid #0099ff;
+  border-left: 2px solid rgba(0, 153, 255, 0.3);
+  animation-duration: 1.5s;
+  animation-direction: reverse;
+}
+
+.ring-3 {
+  width: 50px;
+  height: 50px;
+  top: 50px;
+  left: 50px;
+  border-top: 2px solid #00ff88;
+  border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+  animation-duration: 1s;
+}
+
+.quantum-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, #00eaff, #0099ff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.core-pulse {
+  width: 15px;
+  height: 15px;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: corePulse 2s ease-in-out infinite;
+}
+
+@keyframes quantumRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes corePulse {
+  0%, 100% { 
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Loading Content */
+.loading-content {
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.loading-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00eaff 0%, #0099ff 50%, #00ff88 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.2em;
+  animation: titleShimmer 3s ease-in-out infinite;
+}
+
+@keyframes titleShimmer {
+  0%, 100% { 
+    filter: drop-shadow(0 0 10px #00eaff);
+  }
+  50% { 
+    filter: drop-shadow(0 0 20px #00eaff) drop-shadow(0 0 30px #0099ff);
+  }
+}
+
+.loading-phase {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  color: #00eaff;
+  margin-bottom: 2rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: phaseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes phaseGlow {
+  from {
+    text-shadow: 0 0 5px #00eaff;
+    opacity: 0.8;
+  }
+  to {
+    text-shadow: 0 0 15px #00eaff, 0 0 25px #00eaff;
+    opacity: 1;
+  }
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 234, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(0, 234, 255, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00eaff, #0099ff, #00ff88);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: progressShimmer 2s linear infinite;
+}
+
+.progress-glow {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  background: linear-gradient(90deg, transparent, #00eaff, transparent);
+  border-radius: 5px;
+  opacity: 0.5;
+  animation: progressGlow 3s ease-in-out infinite;
+}
+
+@keyframes progressShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes progressGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.progress-text {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: #00eaff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* System Status */
+.system-status {
+  margin-top: 2rem;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  max-width: 300px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 234, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.status-dot.active {
+  background: #00eaff;
+  box-shadow: 0 0 10px #00eaff;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+/* Loading Particles */
+.loading-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00eaff;
+  border-radius: 50%;
+  animation: particleFloat linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) translateX(0px) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    transform: translateY(-100px) translateX(50px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .quantum-loader {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 2rem;
+  }
+  
+  .ring-1 {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .ring-2 {
+    width: 80px;
+    height: 80px;
+    top: 20px;
+    left: 20px;
+  }
+  
+  .ring-3 {
+    width: 40px;
+    height: 40px;
+    top: 40px;
+    left: 40px;
+  }
+  
+  .loading-title {
+    font-size: 2rem;
+  }
+  
+  .loading-phase {
+    font-size: 1rem;
+  }
+  
+  .status-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quantum-loader {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .ring-1 {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .ring-2 {
+    width: 65px;
+    height: 65px;
+    top: 17.5px;
+    left: 17.5px;
+  }
+  
+  .ring-3 {
+    width: 30px;
+    height: 30px;
+    top: 35px;
+    left: 35px;
+  }
+  
+  .loading-title {
+    font-size: 1.75rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .loading-phase {
+    font-size: 0.9rem;
+  }
+  
+  .loading-container {
+    padding: 1rem;
+  }
+}
+
+/* High Performance Mode */
+@media (prefers-reduced-motion: reduce) {
+  .quantum-ring,
+  .core-pulse,
+  .loading-title,
+  .loading-phase,
+  .progress-fill::after,
+  .progress-glow,
+  .status-dot.active,
+  .particle {
+    animation: none !important;
+  }
+  
+  .loading-title {
+    filter: none;
+  }
+  
+  .loading-phase {
+    text-shadow: 0 0 10px #00eaff;
+    opacity: 1;
+  }
+}

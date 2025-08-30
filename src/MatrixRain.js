@@ -1,55 +1,143 @@
 const MatrixRain = () => {
-  const canvas = document.getElementById('canvas');
-  if (!canvas || typeof canvas.getContext !== 'function') {
-    return () => {};
+  const canvas = document.getElementById('matrix-canvas') || document.createElement('canvas');
+  
+  if (!canvas.getContext) {
+    return () => {}; // Return empty cleanup function if canvas not supported
   }
-
+  
+  // Set canvas attributes
+  canvas.id = 'matrix-canvas';
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.zIndex = '-1';
+  canvas.style.opacity = '0.15';
+  canvas.style.pointerEvents = 'none';
+  
+  // Append to body if not already there
+  if (!document.getElementById('matrix-canvas')) {
+    document.body.appendChild(canvas);
+  }
+  
   const ctx = canvas.getContext('2d');
-
-  let width = window.innerWidth;
-  let height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
-
-  const columnWidth = 20;
-  let columns = Math.floor(width / columnWidth);
-  let yPositions = Array(columns).fill(0);
-
+  
+  // Set canvas size
+  const resizeCanvas = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  };
+  
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  
+  // Matrix characters - mix of various symbols for cyberpunk effect
+  const characters = [
+    // Japanese Katakana
+    'ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ',
+    'サ', 'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト',
+    'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
+    'マ', 'ミ', 'ム', 'メ', 'モ', 'ヤ', 'ユ', 'ヨ', 'ラ', 'リ',
+    'ル', 'レ', 'ロ', 'ワ', 'ヲ', 'ン',
+    // Numbers
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+    // Cyberpunk symbols
+    '!', '@', '#', '$', '%', '^', '&', '*', '(', ')',
+    '-', '=', '+', '[', ']', '{', '}', '|', '\\', ':',
+    ';', '"', "'", '<', '>', ',', '.', '?', '/', '~',
+    // Binary
+    '0', '1', '0', '1', '0', '1',
+    // Hex
+    'A', 'B', 'C', 'D', 'E', 'F',
+    // Special cyberpunk characters
+    '▲', '▼', '◆', '◇', '○', '●', '◎', '□', '■', '△'
+  ];
+  
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = new Array(columns).fill(0);
+  
+  // Colors for different themes
+  const getThemeColor = () => {
+    const theme = document.documentElement.getAttribute('data-theme');
+    return theme === 'cyan' ? '#00ffff' : '#00ff41';
+  };
+  
+  // Brightness levels for fade effect
+  const brightnesses = [1, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05];
+  
   const draw = () => {
-    // trail
-    ctx.fillStyle = 'rgba(4,6,7,0.15)';
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.fillStyle = '#35ff9b';
-    ctx.font = '15pt ui-monospace, SFMono-Regular, monospace';
-
-    for (let i = 0; i < columns; i += 1) {
-      const text = String.fromCharCode(0x30A0 + Math.random() * 96);
-      ctx.fillText(text, i * columnWidth, yPositions[i]);
-      yPositions[i] = yPositions[i] > height + Math.random() * 1000 ? 0 : yPositions[i] + columnWidth;
+    // Black background with slight transparency for trailing effect
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    const themeColor = getThemeColor();
+    
+    // Set font
+    ctx.font = `${fontSize}px 'JetBrains Mono', 'Fira Code', monospace`;
+    
+    for (let i = 0; i < drops.length; i++) {
+      // Draw multiple characters with different brightness levels
+      for (let j = 0; j < brightnesses.length; j++) {
+        const brightness = brightnesses[j];
+        const y = drops[i] - (j * fontSize);
+        
+        if (y > 0 && y < canvas.height) {
+          // Get theme color with brightness
+          if (themeColor === '#00ffff') {
+            ctx.fillStyle = `rgba(0, 255, 255, ${brightness})`;
+          } else {
+            ctx.fillStyle = `rgba(0, 255, 65, ${brightness})`;
+          }
+          
+          // Random character
+          const character = characters[Math.floor(Math.random() * characters.length)];
+          
+          // Add some glow effect for the brightest character
+          if (j === 0) {
+            ctx.shadowColor = themeColor;
+            ctx.shadowBlur = 10;
+          } else {
+            ctx.shadowBlur = 0;
+          }
+          
+          ctx.fillText(character, i * fontSize, y);
+        }
+      }
+      
+      // Move drop down
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
     }
-
-    raf = window.requestAnimationFrame(draw);
   };
-
-  const handleResize = () => {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    columns = Math.floor(width / columnWidth);
-    yPositions = Array(columns).fill(0);
-  };
-
-  window.addEventListener('resize', handleResize);
-  let raf = window.requestAnimationFrame(draw);
-
-  // cleanup
+  
+  // Animation loop
+  const interval = setInterval(draw, 35);
+  
+  // Theme change listener
+  const observer = new MutationObserver(() => {
+    // Force redraw on theme change
+  });
+  
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+  
+  // Cleanup function
   return () => {
-    if (raf) window.cancelAnimationFrame(raf);
-    window.removeEventListener('resize', handleResize);
+    clearInterval(interval);
+    window.removeEventListener('resize', resizeCanvas);
+    observer.disconnect();
+    // Remove canvas when component unmounts
+    const canvasElement = document.getElementById('matrix-canvas');
+    if (canvasElement) {
+      canvasElement.remove();
+    }
   };
 };
 
 export default MatrixRain;
-  

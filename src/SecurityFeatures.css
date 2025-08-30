@@ -1,0 +1,346 @@
+/* Security Features Component Styles */
+.security-features {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 400px;
+  max-height: 500px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  z-index: 1000;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 255, 65, 0.1);
+  animation: slideIn 0.5s ease-out;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.security-features.minimized {
+  height: 70px;
+  max-height: 70px;
+}
+
+.security-features.minimized .security-grid {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.security-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.minimize-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.minimize-btn:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+.security-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.title-icon {
+  font-size: 1.1rem;
+}
+
+.threat-level {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.threat-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.threat-indicator {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.threat-green {
+  background: rgba(0, 255, 65, 0.2);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.threat-yellow {
+  background: rgba(255, 170, 0, 0.2);
+  color: var(--warning);
+  border: 1px solid var(--warning);
+}
+
+.threat-red {
+  background: rgba(255, 51, 51, 0.2);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+.security-grid {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.security-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--border-strong);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+}
+
+.stat-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+
+.security-logs {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+}
+
+.logs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.logs-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scan-button {
+  background: rgba(0, 255, 65, 0.1);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scan-button:hover:not(:disabled) {
+  background: rgba(0, 255, 65, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+}
+
+.scan-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.scan-button.scanning {
+  animation: scanningPulse 1s ease-in-out infinite;
+}
+
+@keyframes scanningPulse {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3); 
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.6); 
+  }
+}
+
+.logs-content {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem;
+  overflow-y: auto;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.log-entry {
+  color: var(--text);
+  margin-bottom: 0.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  word-wrap: break-word;
+  animation: logEntry 0.3s ease-in;
+}
+
+.log-entry:first-child {
+  color: var(--accent);
+}
+
+@keyframes logEntry {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar styling for logs */
+.logs-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.logs-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.logs-content::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+.logs-content::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .security-features {
+    width: 350px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .security-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: 0.5rem;
+  }
+  
+  .security-logs {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .security-features {
+    width: calc(100vw - 30px);
+    left: 15px;
+    right: 15px;
+  }
+  
+  .security-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .security-title {
+    font-size: 0.8rem;
+  }
+  
+  .logs-content {
+    font-size: 0.7rem;
+  }
+}
+
+/* Hide on very small screens or when user prefers reduced motion */
+@media (max-width: 360px), (prefers-reduced-motion: reduce) {
+  .security-features {
+    display: none;
+  }
+}

@@ -1,0 +1,333 @@
+/* Holographic Card Styles */
+.holographic-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
+  box-shadow: var(--box-shadow-neon);
+}
+
+.holographic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 234, 255, 0.1) 0%,
+    rgba(0, 153, 255, 0.05) 25%,
+    rgba(0, 255, 136, 0.1) 50%,
+    rgba(102, 217, 255, 0.05) 75%,
+    rgba(0, 234, 255, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.holographic-card.hovered::before {
+  opacity: 1;
+}
+
+/* Holographic Overlay Effects */
+.holographic-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.holographic-card.hovered .holographic-overlay {
+  opacity: 1;
+}
+
+/* Holographic Shine Effect */
+.holographic-shine {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(calc(var(--mouse-x, 0) * 1deg + var(--mouse-y, 0) * 1deg));
+  animation: holographicShine 3s ease-in-out infinite;
+}
+
+@keyframes holographicShine {
+  0%, 100% {
+    opacity: 0;
+    transform: rotate(0deg) translateX(-100%);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg) translateX(100%);
+  }
+}
+
+/* Holographic Grid */
+.holographic-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 234, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 234, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  animation: holographicGrid 4s linear infinite;
+}
+
+@keyframes holographicGrid {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(20px, 20px);
+    opacity: 0.3;
+  }
+}
+
+/* Holographic Beam */
+.holographic-beam {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 234, 255, 0.2),
+    rgba(0, 153, 255, 0.3),
+    rgba(0, 255, 136, 0.2),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: holographicBeam 2s ease-in-out infinite;
+}
+
+@keyframes holographicBeam {
+  0% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+/* Holographic Content */
+.holographic-content {
+  position: relative;
+  z-index: 3;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Enhanced 3D Effects on Hover */
+.holographic-card.hovered {
+  border-color: var(--accent);
+  box-shadow: 
+    var(--box-shadow-neon),
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Holographic Text Effects */
+.holographic-card .holographic-text {
+  background: var(--hero-hologram);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hologramShift 4s ease-in-out infinite;
+  font-weight: 600;
+}
+
+@keyframes hologramShift {
+  0%, 100% { 
+    background-position: 0% 50%; 
+  }
+  25% { 
+    background-position: 100% 50%; 
+  }
+  50% { 
+    background-position: 100% 100%; 
+  }
+  75% { 
+    background-position: 0% 100%; 
+  }
+}
+
+/* Holographic Buttons */
+.holographic-card .holographic-btn {
+  position: relative;
+  background: rgba(0, 234, 255, 0.1);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.holographic-card .holographic-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.holographic-card .holographic-btn:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 8px rgba(0, 234, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.holographic-card .holographic-btn:hover::before {
+  left: 100%;
+}
+
+/* Holographic Icons */
+.holographic-card .holographic-icon {
+  filter: drop-shadow(0 0 5px var(--accent));
+  transition: filter 0.3s ease;
+}
+
+.holographic-card.hovered .holographic-icon {
+  filter: drop-shadow(0 0 10px var(--accent)) drop-shadow(0 0 20px var(--accent-2));
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-5px); 
+  }
+}
+
+/* Holographic Borders */
+.holographic-card .holographic-border {
+  position: relative;
+  border: 1px solid transparent;
+  background: linear-gradient(var(--panel), var(--panel)) padding-box,
+              var(--hero-hologram) border-box;
+  background-size: 200% 200%;
+  animation: holographicBorder 3s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes holographicBorder {
+  0%, 100% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .holographic-card {
+    /* Reduce 3D effects on mobile for better performance */
+    transform: none !important;
+  }
+  
+  .holographic-card.hovered {
+    transform: scale(1.02) !important;
+  }
+  
+  /* Simplify animations on mobile */
+  .holographic-shine,
+  .holographic-grid,
+  .holographic-beam {
+    animation-duration: 6s;
+  }
+}
+
+/* High Performance Mode */
+@media (prefers-reduced-motion: reduce) {
+  .holographic-card {
+    transform: none !important;
+    transition: none !important;
+  }
+  
+  .holographic-shine,
+  .holographic-grid,
+  .holographic-beam,
+  .holographic-text,
+  .holographic-icon,
+  .holographic-border {
+    animation: none !important;
+  }
+  
+  .holographic-card::before,
+  .holographic-overlay {
+    transition: none !important;
+  }
+  
+  .holographic-card.hovered {
+    border-color: var(--accent);
+    box-shadow: var(--box-shadow-neon);
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .holographic-card {
+    /* Static holographic effect for touch devices */
+    border-color: var(--accent);
+  }
+  
+  .holographic-card::before {
+    opacity: 0.5;
+  }
+  
+  .holographic-overlay {
+    opacity: 0.3;
+  }
+  
+  .holographic-shine,
+  .holographic-grid,
+  .holographic-beam {
+    animation-play-state: paused;
+  }
+}

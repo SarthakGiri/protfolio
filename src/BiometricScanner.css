@@ -1,0 +1,497 @@
+/* Biometric Scanner Styles */
+.biometric-scanner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 500px;
+  max-width: 90vw;
+  background: var(--panel);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  backdrop-filter: blur(40px);
+  box-shadow: var(--box-shadow-neon), 0 25px 80px rgba(0, 0, 0, 0.6);
+  z-index: 10001;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+.biometric-scanner.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.biometric-scanner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 234, 255, 0.05) 0%, transparent 50%, rgba(0, 255, 136, 0.05) 100%);
+  pointer-events: none;
+}
+
+/* Scanner Container */
+.scanner-container {
+  padding: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header */
+.scanner-header {
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 20px;
+}
+
+.scanner-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.scanner-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #666;
+  transition: all 0.3s ease;
+}
+
+.status-dot.scanning {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  animation: statusPulse 1s ease-in-out infinite;
+}
+
+.status-dot.analyzing {
+  background: #ff9500;
+  box-shadow: 0 0 10px #ff9500;
+  animation: statusPulse 1s ease-in-out infinite;
+}
+
+.status-dot.complete {
+  background: var(--accent-3);
+  box-shadow: 0 0 10px var(--accent-3);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
+}
+
+/* Main Scanner Area */
+.scanner-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Fingerprint Scanner */
+.fingerprint-scanner {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanner-glass {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(0, 234, 255, 0.1) 0%, transparent 70%);
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 8px rgba(0, 234, 255, 0.15);
+}
+
+.biometric-scanner.scanning .scanner-glass {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 8px rgba(0, 234, 255, 0.25), 0 0 8px rgba(0, 234, 255, 0.2);
+}
+
+.biometric-scanner.complete .scanner-glass {
+  border-color: var(--accent-3);
+  box-shadow: inset 0 0 20px rgba(0, 255, 136, 0.4), 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+/* Fingerprint Pattern */
+.fingerprint-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pattern-point {
+  position: absolute;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.pattern-point.ridge {
+  background: var(--accent);
+  box-shadow: 0 0 2px var(--accent);
+}
+
+.pattern-point.valley {
+  background: var(--accent-2);
+  box-shadow: 0 0 2px var(--accent-2);
+}
+
+.biometric-scanner.scanning .pattern-point {
+  opacity: 0.8;
+  animation: patternGlow 2s ease-in-out infinite;
+}
+
+@keyframes patternGlow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+/* Scanning Grid */
+.scanning-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+.grid-line {
+  position: absolute;
+  background: var(--accent);
+}
+
+.grid-line.horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.grid-line.vertical {
+  height: 100%;
+  width: 1px;
+}
+
+.biometric-scanner.scanning .grid-line {
+  opacity: 0.5;
+  animation: gridPulse 3s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Scan Line */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--scan-color), transparent);
+  animation: scanSweep 2s linear infinite;
+}
+
+@keyframes scanSweep {
+  0% { transform: translateY(-3px); }
+  100% { transform: translateY(200px); }
+}
+
+/* Scanner Reticle */
+.scanner-reticle {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+}
+
+.reticle-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--accent);
+  opacity: 0.7;
+}
+
+.reticle-corner.top-left {
+  top: 0;
+  left: 0;
+  border-bottom: none;
+  border-right: none;
+}
+
+.reticle-corner.top-right {
+  top: 0;
+  right: 0;
+  border-bottom: none;
+  border-left: none;
+}
+
+.reticle-corner.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-top: none;
+  border-right: none;
+}
+
+.reticle-corner.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-top: none;
+  border-left: none;
+}
+
+.biometric-scanner.scanning .reticle-corner {
+  animation: reticlePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes reticlePulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* Progress Ring */
+.progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring svg {
+  transform: rotate(-90deg);
+}
+
+.progress-text {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Additional Scanners */
+.additional-scanners {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.retina-scanner,
+.voice-scanner,
+.dna-scanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+
+.retina-scanner.active,
+.voice-scanner.active,
+.dna-scanner.active {
+  border-color: var(--accent-3);
+  background: rgba(0, 255, 136, 0.05);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.2);
+}
+
+.scanner-icon {
+  font-size: 2rem;
+  filter: grayscale(1);
+  transition: filter 0.3s ease;
+}
+
+.retina-scanner.active .scanner-icon,
+.voice-scanner.active .scanner-icon,
+.dna-scanner.active .scanner-icon {
+  filter: grayscale(0);
+  animation: iconGlow 2s ease-in-out infinite;
+}
+
+@keyframes iconGlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.scanner-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.scanner-result {
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-3);
+  font-weight: 500;
+}
+
+/* Security Metrics */
+.security-metrics {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 80px;
+}
+
+.metric-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .biometric-scanner {
+    width: calc(100vw - 40px);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .scanner-container {
+    padding: 20px;
+  }
+  
+  .fingerprint-scanner {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .scanner-glass {
+    width: 160px;
+    height: 160px;
+  }
+  
+  .additional-scanners {
+    gap: 15px;
+  }
+  
+  .retina-scanner,
+  .voice-scanner,
+  .dna-scanner {
+    min-width: 80px;
+    padding: 12px;
+  }
+  
+  .security-metrics {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .metric {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .scanner-container {
+    padding: 15px;
+  }
+  
+  .fingerprint-scanner {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .scanner-glass {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .progress-text {
+    font-size: 1.2rem;
+  }
+  
+  .scanner-title {
+    font-size: 1rem;
+  }
+  
+  .additional-scanners {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* High Performance Mode */
+@media (prefers-reduced-motion: reduce) {
+  .biometric-scanner,
+  .status-dot,
+  .pattern-point,
+  .grid-line,
+  .scan-line,
+  .reticle-corner,
+  .scanner-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .biometric-scanner.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
